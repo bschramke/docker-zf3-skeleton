@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx:alpine
+    depends_on:
+        - php
+    ports:
+        - "8081:80"
+    volumes:
+        - .:/srv/www
+        - ./config/site.conf:/etc/nginx/conf.d/default.conf
+
+  php:
+    build: .
+    ports:
+        - 9000:9000
+    volumes:
+        - .:/srv/www
+        - ./config/php.fpm.ini:/usr/local/etc/php/conf.d/local.ini
